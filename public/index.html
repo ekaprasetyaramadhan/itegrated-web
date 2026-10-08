@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aegis SOC - Real-Time Database Security & Dual AI Monitoring</title>
+  <meta name="description" content="Dashboard monitoring keamanan database real-time dengan validasi HMAC-SHA256, integrasi Telegram bot alert, dan inferensi dual AI paralel NVIDIA NIM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow layers -->
+  <div class="ambient-glow glow-cyan"></div>
+  <div class="ambient-glow glow-purple"></div>
+  <div class="ambient-grid"></div>
+
+  <!-- Top Header Navigation -->
+  <header class="top-nav">
+    <div class="nav-brand">
+      <div class="brand-badge-icon">🛡️</div>
+      <div class="brand-text">
+        <h1 class="brand-title">AEGIS // DATABASE SECURITY SOC</h1>
+        <p class="brand-subtitle">Real-Time Threat Monitoring • Supabase HMAC-SHA256 • NVIDIA NIM Dual-AI</p>
+      </div>
+    </div>
+    <div class="nav-actions">
+      <div class="live-indicator">
+        <span class="live-dot"></span>
+        <span class="live-text">TELEMETRY ACTIVE</span>
+      </div>
+      <div class="cicd-badge">
+        <span class="badge-icon">⚡</span>
+        <span>CI/CD: GITHUB ACTIONS ➔ VERCEL</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="dashboard-shell">
+    
+    <!-- 2. METRIC CARD DENGAN STATE TRANSITION DINAMIS -->
+    <section class="metrics-row">
+      
+      <!-- KARTU METRIK UTAMA DENGAN TRANSISI DINAMIS -->
+      <div id="main-security-metric-card" class="metric-card glass-card state-secured">
+        <div class="card-meta">
+          <span class="card-label">STATUS MATRIX KEAMANAN UTAMA</span>
+          <span id="main-security-badge" class="badge-state badge-secured">AMAN</span>
+        </div>
+        <div id="main-security-status-text" class="card-big-value">SYSTEM SECURED</div>
+        <div class="card-subtext" id="main-security-subtext">Semua transmisi basis data aman & signature valid terverifikasi.</div>
+        <div class="card-state-controls">
+          <span class="control-hint">Simulasi State:</span>
+          <button type="button" class="btn-micro" id="btn-force-safe">Set Aman</button>
+          <button type="button" class="btn-micro" id="btn-force-danger">Set Bahaya</button>
+        </div>
+      </div>
+
+      <!-- METRIK 2: SUPABASE WEBHOOK -->
+      <div class="metric-card glass-card">
+        <div class="card-meta">
+          <span class="card-label">SUPABASE WEBHOOK RECEIVER</span>
+          <span class="badge-pill-cyan">HMAC-SHA256</span>
+        </div>
+        <div class="card-big-value font-mono" id="metric-webhook-status">ACTIVE</div>
+        <div class="card-subtext">Endpoint: <code>POST /api/webhook</code> (ES Module)</div>
+        <div class="meter-bar"><div class="meter-fill fill-cyan" style="width: 100%;"></div></div>
+      </div>
+
+      <!-- METRIK 3: DUAL AI CONCURRENCY -->
+      <div class="metric-card glass-card">
+        <div class="card-meta">
+          <span class="card-label">AI ENGINE LATENCY (NIM)</span>
+          <span class="badge-pill-speedup">+39% FASTER</span>
+        </div>
+        <div class="card-big-value font-mono text-cyan" id="metric-gather-time">0.5039s</div>
+        <div class="card-subtext">asyncio.gather() vs 0.8263s Sekuensial</div>
+        <div class="meter-bar"><div class="meter-fill fill-green" style="width: 61%;"></div></div>
+      </div>
+
+      <!-- METRIK 4: TELEGRAM BOT INTEGRATION -->
+      <div class="metric-card glass-card">
+        <div class="card-meta">
+          <span class="card-label">TELEGRAM ALERT DISPATCHER</span>
+          <span class="badge-pill-purple">BOT API</span>
+        </div>
+        <div class="card-big-value" id="metric-telegram-status">READY</div>
+        <div class="card-subtext">Automated Real-time Dispatcher</div>
+        <div class="meter-bar"><div class="meter-fill fill-purple" style="width: 100%;"></div></div>
+      </div>
+
+    </section>
+
+    <!-- WORKSPACE 2 COLUMNS -->
+    <div class="workspace-layout">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-main">
+
+        <!-- 3. PANEL SIMULATOR WEBHOOK HMAC CLIENT-SIDE -->
+        <section class="glass-card panel-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">🔐 Panel Simulator Webhook HMAC (Client-Side)</h2>
+              <p class="section-desc">Kirim payload simulasi Supabase dengan komputasi HMAC-SHA256 langsung di browser via Web Crypto API</p>
+            </div>
+            <span class="tag-tech font-mono">window.crypto.subtle</span>
+          </div>
+
+          <form id="webhook-sim-form" class="sim-form" onsubmit="return false;">
+            <div class="form-row-2">
+              <div class="form-group">
+                <label for="sim-status" class="form-label">a. Pilihan Status Kejadian:</label>
+                <select id="sim-status" class="form-select">
+                  <option value="aman">Aman (Benign / Terverifikasi)</option>
+                  <option value="bahaya" selected>Bahaya (Security Threat / Incident)</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="sim-threat-level" class="form-label">b. Level Ancaman Database:</label>
+                <select id="sim-threat-level" class="form-select">
+                  <option value="0">Level 0 (Normal / Operasi Rutin)</option>
+                  <option value="1">Level 1 (Rendah / Anomali Minor)</option>
+                  <option value="2">Level 2 (Sedang / Pola Mencurigakan)</option>
+                  <option value="3" selected>Level 3 (Kritis / Injeksi SQL Aktif)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="sim-message" class="form-label">c. Pesan Laporan / Payload Query:</label>
+              <textarea id="sim-message" rows="2" class="form-textarea font-mono" spellcheck="false">' UNION SELECT username, password_hash FROM admin_users --</textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="sim-secret-key" class="form-label">d. Kunci Rahasia HMAC (Secret Key):</label>
+              <input type="text" id="sim-secret-key" class="form-input font-mono" value="super-secret-hmac-key-supabase-2026">
+            </div>
+
+            <div class="checkbox-container">
+              <label class="checkbox-label">
+                <input type="checkbox" id="sim-fake-sig">
+                <span class="custom-check"></span>
+                <span class="check-text">e. Kirim tanda tangan palsu (simulasi serangan tampering / spoofing)</span>
+              </label>
+            </div>
+
+            <!-- Signature Preview -->
+            <div class="sig-preview-box">
+              <div class="sig-preview-header">
+                <span class="font-mono text-muted">HMAC-SHA256 Header (x-signature):</span>
+                <span id="sig-mode-badge" class="badge-tag-safe">AUTHENTIC</span>
+              </div>
+              <div class="sig-value font-mono" id="sim-sig-display">Menghitung digest...</div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" id="btn-submit-webhook" class="btn-action btn-cyan">
+                <span class="btn-icon">🚀</span>
+                <span>f. Kirim Webhook (POST ke /api/webhook)</span>
+              </button>
+            </div>
+
+            <!-- Webhook Response Inspector -->
+            <div id="webhook-response-box" class="response-inspector" style="display: none;">
+              <div class="inspector-header">
+                <span class="inspector-title">Respons Serverless Function (api/webhook.js):</span>
+                <span id="webhook-resp-status-badge" class="badge-status-code">200 OK</span>
+              </div>
+              <pre id="webhook-resp-json" class="inspector-code font-mono"></pre>
+            </div>
+          </form>
+        </section>
+
+        <!-- 4. PANEL BENCHMARK AI ASYNCHRONOUS -->
+        <section class="glass-card panel-section">
+          <div class="section-header">
+            <div>
+              <h2 class="section-title">⚡ Panel Benchmark AI Asynchronous (NVIDIA NIM)</h2>
+              <p class="section-desc">Panggilan paralel dua model AI secara serentak via <code>asyncio.gather()</code> di FastAPI</p>
+            </div>
+            <span class="tag-tech font-mono">GET /api/proses_ai</span>
+          </div>
+
+          <div class="ai-query-bar">
+            <input type="text" id="ai-query-input" class="form-input font-mono" value="SELECT * FROM users WHERE '1'='1' UNION SELECT cc, cvv FROM cards" placeholder="Masukkan kueri yang akan diuji...">
+            <button type="button" id="btn-run-ai" class="btn-action btn-primary">
+              <span class="btn-icon">⚡</span>
+              <span>Jalankan Rantai AI (Paralel)</span>
+            </button>
+          </div>
+
+          <!-- Total Execution Time Banner -->
+          <div class="benchmark-summary-box">
+            <div class="summary-left">
+              <span class="summary-label">TOTAL WAKTU EKSEKUSI PARALEL (asyncio.gather):</span>
+              <span class="summary-time font-mono" id="ai-total-duration">0.5039 detik</span>
+            </div>
+            <div class="summary-right">
+              <span class="badge-speedup font-mono">Bukan 0.82s (Hemat ~39% Latensi)</span>
+            </div>
+          </div>
+
+          <!-- Comparison Visualizer Track -->
+          <div class="benchmark-track-group">
+            <div class="track-row">
+              <span class="track-label font-mono">Model RF (0.3s):</span>
+              <div class="track-bar-bg"><div class="track-bar bar-rf" style="width: 37.5%;">300ms</div></div>
+            </div>
+            <div class="track-row">
+              <span class="track-label font-mono">Model SVM (0.5s):</span>
+              <div class="track-bar-bg"><div class="track-bar bar-svm" style="width: 62.5%;">500ms</div></div>
+            </div>
+            <div class="track-row highlight-track">
+              <span class="track-label font-mono font-bold text-cyan">Paralel (gather):</span>
+              <div class="track-bar-bg"><div class="track-bar bar-gather" id="bar-gather-fill" style="width: 62.5%;">~0.50s (Model Terlambat)</div></div>
+            </div>
+          </div>
+
+          <!-- HASIL PREDIKSI MODEL RF DAN SVM DALAM KARTU TERPISAH -->
+          <div class="ai-cards-grid">
+            
+            <!-- Kartu Model A: RF -->
+            <div id="card-model-rf" class="ai-model-card card-bahaya">
+              <div class="model-header">
+                <div class="model-meta">
+                  <span class="model-id font-mono">MODEL A (NVIDIA NIM)</span>
+                  <h3 class="model-name">Random Forest Classifier</h3>
+                </div>
+                <span id="badge-rf" class="badge-model-verdict badge-bahaya">BAHAYA</span>
+              </div>
+              <div class="model-body">
+                <div class="model-metric">
+                  <span class="model-metric-label">Keyakinan (Confidence):</span>
+                  <span id="val-rf-conf" class="model-metric-val font-mono">95.0%</span>
+                </div>
+                <div class="model-metric">
+                  <span class="model-metric-label">Latensi Model:</span>
+                  <span class="model-metric-val font-mono">~0.30 detik</span>
+                </div>
+                <div class="model-bar"><div id="fill-rf-conf" class="model-bar-fill fill-bahaya" style="width: 95%;"></div></div>
+              </div>
+            </div>
+
+            <!-- Kartu Model B: SVM -->
+            <div id="card-model-svm" class="ai-model-card card-bahaya">
+              <div class="model-header">
+                <div class="model-meta">
+                  <span class="model-id font-mono">MODEL B (NVIDIA NIM)</span>
+                  <h3 class="model-name">Support Vector Machine</h3>
+                </div>
+                <span id="badge-svm" class="badge-model-verdict badge-bahaya">BAHAYA</span>
+              </div>
+              <div class="model-body">
+                <div class="model-metric">
+                  <span class="model-metric-label">Keyakinan (Confidence):</span>
+                  <span id="val-svm-conf" class="model-metric-val font-mono">93.1%</span>
+                </div>
+                <div class="model-metric">
+                  <span class="model-metric-label">Latensi Model:</span>
+                  <span class="model-metric-val font-mono">~0.50 detik</span>
+                </div>
+                <div class="model-bar"><div id="fill-svm-conf" class="model-bar-fill fill-bahaya" style="width: 93.1%;"></div></div>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-side">
+
+        <!-- 5. LOG CONSOLE VIRTUAL (TERMINAL ASLI) -->
+        <section class="glass-card terminal-card">
+          <div class="terminal-titlebar">
+            <div class="terminal-controls">
+              <span class="ctrl-dot dot-close"></span>
+              <span class="ctrl-dot dot-min"></span>
+              <span class="ctrl-dot dot-max"></span>
+            </div>
+            <div class="terminal-window-title font-mono">SOC TELEMETRY & AUDIT STREAM // TTY1</div>
+            <button type="button" id="btn-clear-console" class="btn-terminal-clear">Bersihkan</button>
+          </div>
+          <div id="virtual-console" class="terminal-screen font-mono">
+            <div class="term-line term-system">
+              <span class="term-time">[11:28:01]</span> <span class="term-tag tag-sys">[SYSTEM]</span> SOC Monitoring Engine initialized.
+            </div>
+            <div class="term-line term-system">
+              <span class="term-time">[11:28:02]</span> <span class="term-tag tag-ai">[AI-NIM]</span> Loaded Model RF (0.3s) & Model SVM (0.5s).
+            </div>
+            <div class="term-line term-system">
+              <span class="term-time">[11:28:03]</span> <span class="term-tag tag-wh">[WEBHOOK]</span> Node.js webhook receiver (HMAC-SHA256) listening.
+            </div>
+            <div class="term-line term-info">
+              <span class="term-time">[11:28:04]</span> <span class="term-tag tag-tg">[TELEGRAM]</span> Bot API dispatcher connected to channel alert.
+            </div>
+          </div>
+        </section>
+
+        <!-- SECURITY ARCHITECTURE FLOW INSPECTOR -->
+        <section class="glass-card panel-section">
+          <h3 class="section-title-sm">🔄 Security Pipeline Workflow</h3>
+          <div class="flow-steps-list">
+            <div class="flow-step">
+              <span class="step-badge">1</span>
+              <div>
+                <strong class="step-head">Supabase Database Trigger</strong>
+                <p class="step-sub">Event SQL audit dikirim bersama header <code>x-signature</code> HMAC.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-badge">2</span>
+              <div>
+                <strong class="step-head">Vercel Webhook Receiver (Node.js)</strong>
+                <p class="step-sub">Validasi HMAC-SHA256 zero-trust sebelum dispatch ke Telegram.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-badge">3</span>
+              <div>
+                <strong class="step-head">FastAPI Asynchronous Engine</strong>
+                <p class="step-sub">Inferensi paralel 2 model NVIDIA NIM via <code>asyncio.gather()</code>.</p>
+              </div>
+            </div>
+            <div class="flow-step">
+              <span class="step-badge">4</span>
+              <div>
+                <strong class="step-head">Telegram Alert & SOC UI Sync</strong>
+                <p class="step-sub">Notifikasi otomatis & update status visual dinamis real-time.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </div>
+
+    </div>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-content">
+      <span>Aegis SOC Security Operations &copy; 2026 | Supabase HMAC-SHA256 • NVIDIA NIM Dual-AI • Vercel CI/CD</span>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

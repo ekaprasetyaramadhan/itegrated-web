@@ -1,0 +1,13 @@
+{
+  "name": "aegis-database-soc",
+  "version": "1.0.0",
+  "description": "Real-Time Database Security Monitoring with Dual AI and Supabase HMAC Webhook",
+  "type": "module",
+  "scripts": {
+    "test:flows": "node scripts/test_flows.js",
+    "test:ai": "python test_async_ai.py",
+    "start": "node server.js"
+  },
+  "dependencies": {},
+  "devDependencies": {}
+}

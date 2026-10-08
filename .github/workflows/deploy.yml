@@ -1,0 +1,61 @@
+name: Deploy to Vercel CI/CD
+
+on:
+  push:
+    branches:
+      - main
+      - master
+
+jobs:
+  deploy:
+    name: Build and Deploy to Vercel Production
+    runs-on: ubuntu-latest
+
+    steps:
+      # Langkah 1: Checkout repository
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+
+      # Langkah 2: Setup Node.js untuk Vercel CLI
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Langkah 3: Setup Python untuk pengujian backend
+      - name: Setup Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      # Langkah 4: Install dependensi & jalankan uji otomatis (Dual AI & HMAC Webhook)
+      - name: Install Dependencies & Run Automated Tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          python test_async_ai.py
+          node scripts/test_flows.js
+
+      # Langkah 5: Install Vercel CLI secara global
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+
+      # Langkah 6: Deploy ke Vercel Production menggunakan GitHub Secrets
+      - name: Deploy to Vercel (Production)
+        run: |
+          vercel deploy --prod --yes \
+            --token=${{ secrets.VERCEL_TOKEN }} \
+            --build-env SUPABASE_URL="${{ secrets.SUPABASE_URL }}" \
+            --build-env SUPABASE_ANON_KEY="${{ secrets.SUPABASE_ANON_KEY }}" \
+            --build-env SUPABASE_WEBHOOK_SECRET="${{ secrets.SUPABASE_WEBHOOK_SECRET }}" \
+            --build-env TELEGRAM_BOT_TOKEN="${{ secrets.TELEGRAM_BOT_TOKEN }}" \
+            --build-env TELEGRAM_CHAT_ID="${{ secrets.TELEGRAM_CHAT_ID }}"
+        env:
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
+          SUPABASE_WEBHOOK_SECRET: ${{ secrets.SUPABASE_WEBHOOK_SECRET }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
